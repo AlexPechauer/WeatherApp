@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "outDir": "./build",
+    "esModuleInterop": true,
+  }
+}
