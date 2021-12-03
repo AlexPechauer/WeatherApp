@@ -25,37 +25,37 @@ app.post('/', async function (req, res) {
       const response = await got(url);
       const weather = JSON.parse(response.body);
 
-      if (weather.main == undefined) {
+      if (!weather.main) {
         res.render('index', { weather: null, error: 'Error, please try again' });
-      } else {
-        let place = `${weather.name}, ${weather.sys.country}`,
-          weatherTimezone = `${new Date(weather.dt * 1000 - weather.timezone * 1000)}`,
-          weatherTemp: number = +`${weather.main.temp}`,
-          weatherPressure = `${weather.main.pressure}`,
-          weatherIcon = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
-          weatherDescription = `${weather.weather[0].description}`,
-          humidity = `${weather.main.humidity}`,
-          clouds = `${weather.clouds.all}`,
-          visibility = `${weather.visibility}`,
-          main = `${weather.weather[0].main}`,
-          weatherFahrenheit: number = (weatherTemp * 9) / 5 + 32;
-
-        res.render("index", {
-          weather: weather,
-          place: place,
-          temp: weatherTemp,
-          pressure: weatherPressure,
-          icon: weatherIcon,
-          description: weatherDescription,
-          timezone: weatherTimezone,
-          humidity: humidity,
-          fahrenheit: weatherFahrenheit,
-          clouds: clouds,
-          visibility: visibility,
-          main: main,
-          error: null,
-        });
       }
+
+      let place = `${weather.name}, ${weather.sys.country}`,
+        weatherTimezone = `${new Date(weather.dt * 1000 - weather.timezone * 1000)}`,
+        weatherTemp: number = +`${weather.main.temp}`,
+        weatherPressure = `${weather.main.pressure}`,
+        weatherIcon = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
+        weatherDescription = `${weather.weather[0].description}`,
+        humidity = `${weather.main.humidity}`,
+        clouds = `${weather.clouds.all}`,
+        visibility = `${weather.visibility}`,
+        main = `${weather.weather[0].main}`,
+        weatherFahrenheit: number = (weatherTemp * 9) / 5 + 32;
+
+      res.render("index", {
+        weather: weather,
+        place: place,
+        temp: weatherTemp,
+        pressure: weatherPressure,
+        icon: weatherIcon,
+        description: weatherDescription,
+        timezone: weatherTimezone,
+        humidity: humidity,
+        fahrenheit: weatherFahrenheit,
+        clouds: clouds,
+        visibility: visibility,
+        main: main,
+        error: null,
+      });
     } catch (error) {
       res.render('index', { weather: null, error: 'Error, please try again' });
       console.log(error.response.body);
